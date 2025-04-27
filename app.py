@@ -1,5 +1,5 @@
 '''
-📈 Flowchart Diagram: Landscape Video to Portrait Converter
+📈 Flowchart Diagram: Video Landscape ➡️ Portrait Converter
 
 flowchart TD
     A[Start] --> B[User uploads video]
@@ -13,7 +13,6 @@ flowchart TD
     H --> I[Display processed video in Streamlit]
     I --> J[Allow user to download final portrait video]
     J --> K[End]
-
 '''
 
 import streamlit as st
@@ -28,7 +27,7 @@ def convert_landscape_to_portrait(video_path, output_path, target_resolution=(10
     target_width, target_height = target_resolution
 
     if clip_width < clip_height:
-        # Already portrait: only resize
+        # Already portrait, just resize
         clip_resized = clip.resize(height=target_height)
     else:
         # Crop horizontally for portrait aspect ratio
@@ -41,7 +40,8 @@ def convert_landscape_to_portrait(video_path, output_path, target_resolution=(10
     
     clip_resized.write_videofile(output_path, codec='libx264', audio_codec='aac')
 
-st.set_page_config(page_title="Video Landscape ➡️ Portrait Converter", layout="centered")
+# --- Streamlit App Interface ---
+st.set_page_config(page_title="🎬 Video Landscape ➡️ Portrait Converter", layout="centered")
 
 st.title("🎥 Video Landscape ➡️ Portrait Converter (Pixel Perfect)")
 
@@ -54,12 +54,12 @@ if uploaded_file:
 
     output_path = os.path.join(tempfile.gettempdir(), "output_portrait.mp4")
 
-    with st.spinner("Processing your video... Please wait."):
+    with st.spinner("🔄 Processing your video..."):
         convert_landscape_to_portrait(input_path, output_path)
 
-    st.success("✅ Conversion Successful!")
+    st.success("✅ Conversion Completed!")
 
-    st.subheader("Preview of Portrait Video:")
+    st.subheader("🎬 Preview of Portrait Video:")
     st.video(output_path)
 
     with open(output_path, "rb") as file:
